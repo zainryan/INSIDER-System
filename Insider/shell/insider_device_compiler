@@ -1,0 +1,62 @@
+#!/bin/bash
+
+if [ ! -d "kernels" ];then
+    echo "Error: Cannot find kernel directory!"
+    exit 1
+fi
+
+if [ ! -f "interconnects.cpp" ];then
+    echo "Error: Cannot find interconnects.cpp!"
+    exit 1
+fi
+
+if [ ! -d "/usr/include/staccel" ];then
+    echo "Error: Cannot find staccel headers!"
+    exit 1
+fi
+
+if [ ! -d "/usr/include/insider" ];then
+    echo "Error: Cannot find insider headers!"
+    exit 1
+fi
+
+if [ ! -d "/usr/insider/synthesis/kernels" ];then
+    echo "Error: Cannot find the insider synthesis kernels folder!"
+    exit 1
+fi
+
+rm -rf staccel.old
+mv staccel staccel.old 1>/dev/null 2>&1
+mkdir staccel
+mkdir staccel/inc
+mkdir staccel/kernels
+cp inc/* staccel/inc 1>/dev/null 2>&1
+
+kernelSources=`ls kernels`
+
+for kernelSource in $kernelSources;
+do
+    if [[ $kernelSource != *.cpp ]];then
+	echo "Error: kernel directory contains non-cpp file(s)!"
+	exit 1
+    fi
+done
+
+insider_interconnect interconnects.cpp $kernelSources -- -I/usr/include/staccel -I/usr/include/insider -I/usr/include/hls_csim -I kernels -I inc -DINSIDER_COMPILER \
+    | clang-format --style=llvm 1>staccel/interconnects.cpp &
+
+cp /usr/insider/synthesis/kernels/* staccel/kernels
+
+for kernelSource in $kernelSources;
+do
+    insider_app $@ kernels/$kernelSource -- -I/usr/include/staccel -I/usr/include/insider -I/usr/include/hls_csim -I inc \
+	| clang-format --style=llvm 1>staccel/kernels/$kernelSource &
+done
+
+insider_reset_syn $kernelSources | clang-format --style=llvm >staccel/kernels/reset_propaganda.cpp
+wait
+
+for kernelSource in $kernelSources;
+do
+    sed "s/\(.*\)__attribute__((annotate(\"no_reset\")))\(.*\)/\1\2/g" staccel/kernels/$kernelSource -i
+done

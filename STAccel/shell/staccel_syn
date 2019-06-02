@@ -1,0 +1,131 @@
+#!/bin/bash
+
+function synthesis {
+    echo "kernel name:" $1 1>log 2>&1
+    echo "open_project" "hls" >> script.tcl
+    echo "set_top" $1 >> script.tcl
+    echo "add_files" $1.cpp '-cflags "-std=c++11 -I/usr/include/staccel -I/usr/include/insider -DSTACCEL_SYN"' >> script.tcl
+    echo "open_solution \"solution1\"" >> script.tcl
+    echo "set_part {xcvu9p-flgb2104-2-i}" >> script.tcl
+    echo "create_clock -period 4 -name default" >> script.tcl
+    echo "config_compile -name_max_length 100" >> script.tcl
+    echo "set_clock_uncertainty 0.7 default" >> script.tcl
+    echo "csynth_design" >> script.tcl
+    vivado_hls script.tcl | grep -i --regex "warning\|error\|Pipelining result" 1>>log 2>&1 &
+}
+
+if [ ! -d "kernels" ];then
+    echo "Error: Cannot find kernel directory!"
+    exit 1
+fi
+
+if [ ! -f "interconnects.cpp" ];then
+    echo "Error: Cannot find interconnects.cpp!"
+    exit 1
+fi
+
+if [ ! -d "/usr/include/staccel" ];then
+    echo "Error: Cannot find staccel headers!"
+    exit 1
+fi
+
+if [ ! -d "/usr/include/insider" ];then
+    echo "Error: Cannot find insider headers!"
+    exit 1
+fi
+
+if [ ! -d "/usr/staccel/template" ];then
+    echo "Error: Cannot find staccel template!"
+    exit 1
+fi
+
+rm -rf build log_all
+mkdir build
+mkdir build/interconnects
+
+for fileName in `ls kernels`;
+do
+    if [[ $fileName != *.cpp ]];then
+	echo "Error: kernel directory contains non-cpp file(s)!"
+	exit 1
+    fi
+    nameLen=${#fileName}
+    kernelName=${fileName:0:`expr $nameLen - 4`}
+    mkdir build/$kernelName    
+    cp inc/* build/$kernelName 1>/dev/null 2>&1
+    cp kernels/$fileName build/$kernelName
+    cd build/$kernelName
+    synthesis $kernelName
+    staccel_s2s_kernel $fileName -- -I/usr/include/staccel -I/usr/include/insider -I/usr/include/hls_csim \
+	| clang-format --style=llvm 1>../interconnects/$fileName & pids_s2s_kernel+=($!)
+    cd ../..
+done
+
+wait "${pids_s2s_kernel[@]}"
+
+staccel_s2s_interconnect interconnects.cpp -- -I/usr/include/staccel -I/usr/include/hls_csim -I/usr/include/insider -I inc -I kernels \
+    | clang-format --style=llvm 1>build/interconnects/interconnects.cpp
+mkdir build/interconnects/inc_tmp
+cp inc/* build/interconnects/inc_tmp 1>/dev/null 2>&1
+cd build/interconnects/inc_tmp
+
+for fileName in `ls`;
+do
+    newFileName=${fileName}.cpp
+    cp $fileName $newFileName
+    staccel_s2s_kernel $newFileName -- -Wno-pragma-once-outside-header -I/usr/include/staccel -I/usr/include/insider -I/usr/include/hls_csim \
+	| clang-format --style=llvm 1>../$fileName & pids_s2s_header+=($!)
+done
+
+wait "${pids_s2s_header[@]}"
+cd ..
+synthesis interconnects
+cd ../../
+wait
+
+for dirName in `ls build`;
+do
+    cat build/$dirName/log >> log_all
+    echo >> log_all
+done
+
+cat log_all
+
+rm -rf project.old
+mv project project.old 1>/dev/null 2>&1
+cp -r /usr/staccel/template project
+
+cp build/interconnects/hls/solution1/syn/verilog/* project/design
+
+for folderName in `ls build`;
+do
+    if [[ $folderName != "interconnects" ]];then
+	cp build/$folderName/hls/solution1/syn/verilog/* project/design
+	sed "s/ap_done,/ap_done,\nap_continue,/g" -i project/design/$folderName.v
+	sed "s/output.*ap_ready;/output ap_ready; output ap_continue;/g" -i project/design/$folderName.v
+    fi
+done
+
+sed "s/\.ap_start.*/\.ap_start\(ap_start\),/g" -i project/design/interconnects.v
+sed "s/\.start_full_n.*//g" -i project/design/interconnects.v
+sed "s/\.start_out.*//g" -i project/design/interconnects.v
+sed "s/\.start_write.*//g" -i project/design/interconnects.v
+
+staccel_pinckr
+mv project/design/interconnects.v.new project/design/interconnects.v
+
+ls project/design/*.tcl 1>/dev/null 2>&1
+if [ $? -eq 0 ]; then
+    echo "Gen IP Cores..."
+    cd project/design
+    vivado -mode batch -nojournal -nolog -notrace -source genip
+    mkdir sim
+    find . -name "*.vhd" | grep ".srcs" | grep "/sim/" | xargs -I {} cp {} sim
+    find . -name "*.v" | grep ".srcs" | grep "/sim/" | xargs -I {} cp {} sim
+    cd ../..
+fi
+
+cd project/design
+grep "readmem" * | cut  -d ':' -f 1 | xargs -I {} sed "s,\(readmemh(\"\)\./,\1`pwd`/,g" {}  -i
+cd ../../
+

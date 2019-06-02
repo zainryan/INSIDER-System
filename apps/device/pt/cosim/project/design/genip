@@ -1,0 +1,7 @@
+create_project -in_memory -force
+
+foreach file [glob -dir . *.tcl] {
+    source $file
+}
+
+close_project

@@ -1,0 +1,7 @@
+staccel/
+sim/
+build/
+*.bak
+*.old
+*~
+*.swp

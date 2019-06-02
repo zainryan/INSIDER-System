@@ -1,0 +1,69 @@
+#!/bin/bash
+
+if [ ! -d "kernels" ];then
+    echo "Error: Cannot find kernel directory!"
+    exit 1
+fi
+
+if [ ! -f "interconnects.cpp" ];then
+    echo "Error: Cannot find interconnects.cpp!"
+    exit 1
+fi
+
+if [ ! -d "/usr/include/staccel" ];then
+    echo "Error: Cannot find staccel headers!"
+    exit 1
+fi
+
+if [ ! -d "/usr/include/insider" ];then
+    echo "Error: Cannot find insider headers!"
+    exit 1
+fi
+
+if [ ! -d "/usr/insider/cosim/kernels" ];then
+    echo "Error: Cannot find the insider cosim kernels folder!"
+    exit 1
+fi
+
+rm -rf cosim.old
+mv cosim cosim.old 1>/dev/null 2>&1
+mkdir cosim
+mkdir cosim/inc
+mkdir cosim/kernels
+cp inc/* cosim/inc 1>/dev/null 2>&1
+
+kernelSources=`ls kernels`
+
+for kernelSource in $kernelSources;
+do
+    if [[ $kernelSource != *.cpp ]];then
+	echo "Error: kernel directory contains non-cpp file(s)!"
+	exit 1
+    fi
+done
+
+insider_cosim_intc interconnects.cpp $kernelSources -- -I/usr/include/staccel -I/usr/include/insider -I kernels -I inc -I/usr/include/hls_csim -DINSIDER_COMPILER \
+    | clang-format --style=llvm 1>cosim/interconnects.cpp
+
+cp /usr/insider/cosim/kernels/* cosim/kernels
+
+for kernelSource in $kernelSources;
+do
+    insider_app $@ kernels/$kernelSource -- -I/usr/include/staccel -I/usr/include/insider -I/usr/include/hls_csim -I inc \
+	| clang-format --style=llvm 1>cosim/kernels/$kernelSource &
+done
+
+insider_reset_syn $kernelSources | clang-format --style=llvm >cosim/kernels/reset_propaganda.cpp
+wait
+
+for kernelSource in $kernelSources;
+do
+    sed "s/\(.*\)__attribute__((annotate(\"no_reset\")))\(.*\)/\1\2/g" cosim/kernels/$kernelSource -i
+done
+
+cd cosim
+staccel_syn
+rm -rf project/software/verif_rtl
+sudo cp -r /usr/insider/cosim/verif project/software/verif_rtl
+sudo chown centos:centos -R project/software/verif_rtl
+cd ..

@@ -1,0 +1,12 @@
+[global]
+bs=512
+ioengine=sync
+size=1g
+direct=1
+runtime=60
+filename=/dev/nvme_fpga
+numjobs=1
+
+[seq-read]
+rw=write
+stonewall

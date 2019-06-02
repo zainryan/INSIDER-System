@@ -1,0 +1,35 @@
+#!/bin/bash
+
+if [ ! -d "kernels" ];then
+    echo "Error: Cannot find kernel directory!"
+    exit 1
+fi
+
+if [ ! -f "interconnects.cpp" ];then
+    echo "Error: Cannot find interconnects.cpp!"
+    exit 1
+fi
+
+if [ ! -d "/usr/include/staccel" ];then
+    echo "Error: Cannot find staccel headers!"
+    exit 1
+fi
+
+rm -rf csim.old
+mv csim csim.old 1>/dev/null 2>&1
+
+mkdir csim
+mkdir csim/src
+mkdir csim/bin
+mkdir csim/inc
+staccel_csim_interconnect interconnects.cpp -- -I/usr/include/staccel -I/usr/include/insider -I/usr/include/hls_csim -I inc -I kernels \
+    | clang-format --style=llvm 1>csim/src/interconnects.cpp
+cp kernels/* csim/src/
+cp -r inc/* csim/inc 1>/dev/null 2>&1
+
+echo > csim/csim_compile.sh
+echo -e '#!/bin/bash\n
+CXXFLAGS="-g"\n
+g++ $CXXFLAGS src/interconnects.cpp -DCSIM -I/usr/include/staccel -I/usr/include/insider -I/usr/include/hls_csim -I src -I inc -std=c++11 -pthread -o bin/csim' \
+    >> csim/csim_compile.sh
+chmod a+x csim/csim_compile.sh
