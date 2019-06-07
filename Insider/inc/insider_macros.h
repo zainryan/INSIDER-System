@@ -1,0 +1,48 @@
+#ifndef INSIDER_MACROS_H_
+#define INSIDER_MACROS_H_
+
+#define TAG(x) (x << 2)
+#define KBUF_ADDR_TAG (4)
+#define DMA_DELAY_CYCLE_TAG (5)
+#define DMA_THROTTLE_PARAM_TAG (6)
+#define DRIVE_DELAY_CYCLE_TAG (7)
+#define DRIVE_THROTTLE_PARAM_TAG (8)
+#define PRESERVER_CHEAT_TAG (9)
+#define APP_FILE_INFO_TAG (10)
+#define APP_BUF_ADDRS_TAG (11)
+#define APP_FREE_BUF_TAG (12)
+#define APP_INPUT_PARAM_TAG (13)
+#define RESET_TAG (14)
+#define DEBUG_TAG (15)
+#define APP_COMMIT_WRITE_BUF_TAG (16)
+#define APP_WRITE_TOTAL_LEN_TAG (17)
+#define APP_IS_WRITE_MODE_TAG (18)
+#define APP_REAL_WRITTEN_BYTES_TAG (19)
+#define APP_WRITE_FINISHED_TAG (20)
+#define APP_VIRT_WRITTEN_BYTES_TAG (21)
+#define READ_CMD_TAG_OFFSET (64)
+#define WRITE_CMD_TAG_OFFSET (128)
+
+#define READ_CMD (0)
+#define WRITE_CMD (1)
+#define HOST_READ_REQ (0)
+#define DEVICE_READ_REQ (1)
+#define PHYSICAL_SECTOR_SIZE (4096)
+#define PHYSICAL_SECTOR_SIZE_LOG2 (12)
+#define DRAM_ADDR_BUS_WIDTH (36) // 64 GB
+#define APP_BUF_SIZE (2 * 1024 * 1024)
+#define APP_BUF_SIZE_LOG2 (21)
+#define MAX_THROTTLE_CONTIGUOUS_LOG2 (24)
+#define DEVICE_REQ_QUEUE_DEPTH (64)
+#define DATA_BUS_WIDTH (0x40)
+#define DATA_BUS_WIDTH_LOG2 (6)
+#define SECTOR_SIZE_LOG2 (9)
+#define ALLOCATED_BUF_NUM (8)       // should be the power of 2
+#define PCIE_WRITE_BATCH_NUM (0x40) // should be the power of 2
+#define PCIE_READ_BATCH_NUM (0x40)
+#define DRAM_READ_BATCH_NUM (0x40)
+#define DRAM_WRITE_BATCH_NUM (0x40)
+#define RESET_CNT (2048)
+#define MAX_EXTENT_NUM (16)
+
+#endif

@@ -1,0 +1,40 @@
+#----- REMOVE LINES ABOVE HERE --------------------------
+#
+# This license is valid from Thu Mar 22 17:27:24 2018
+#
+# This license is NODELOCKED to HOSTID=ANY;
+# there is no need to run lmgrd for this license.
+#
+#
+#
+# This is an evaluation license.
+# This license is valid for 365 days ( 365 days ) from Thu Mar 22 17:27:24 2018
+INCREMENT custom_feature_bundle_154928 xilinxd 2018.03 31-mar-2019 \
+	  uncounted 89BEB41F381C \
+	  VENDOR_STRING=Amazon_Web_Services,custom_feature_bundle_154928,software,custom_days,_2632_885_1481759368_503 \
+	  HOSTID=ANY ISSUER="Xilinx Inc, englm" START=22-Mar-2018 TS_OK
+#
+#----------------------------------------------------------------------
+# The following PACKAGE definition section is a REQUIRED part of this license:
+#
+
+# Full list: Partial Reconfig, 1735 V2 and V1, XHMC, Webtalk disable, VU9P, VU9P_bitgen, Vivado System Edition (Device locked), ap_opencl
+
+PACKAGE custom_feature_bundle_154928 xilinxd 2018.03 A36DBFB640AE \
+	COMPONENTS=" PartialReconfiguration EncryptedWriter_v1 \
+	EncryptedWriter_v2 wtt_override Simulation HLS Analyzer SysGen \
+	ap_opencl xcvu9p xcvu9p_bitgen" OPTIONS=SUITE
+#
+#
+
+## This is an evaluation license.
+
+INCREMENT xhmc xilinxd 2018.03 31-mar-2019 uncounted 07B5550C9179 \
+	  VENDOR_STRING=License_Type:Hardware_Evaluation;Xilinx,xhmc,ip,evaluation,_11636_4447_1487225842_386 \
+	  HOSTID=ANY ISSUER="Xilinx Inc, englm" NOTICE="The license for \
+	  this core was generated for englm@xilinx.com on Wed Feb 15 \
+	  22:17:22 2017. It is the responsibility of the Licensee of \
+	  this core to adhere to terms and conditions of the applicable \
+	  License Agreement when using this core." START=22-Mar-2018 \
+	  TS_OK
+#
