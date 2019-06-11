@@ -1,6 +1,7 @@
 staccel/
 sim/
 build/
+!STAccel/template/build
 *.bak
 *.old
 *~
