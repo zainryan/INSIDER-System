@@ -28,7 +28,7 @@ string random_weight(unsigned int *tid) {
 }
 
 int main() {
-  freopen("knn_data.txt", "w", stdout);
+  freopen("/mnt/centos/knn_data.txt", "w", stdout);
   ios::sync_with_stdio(false);
 
   omp_set_num_threads(DATA_GEN_NUM_THREADS);

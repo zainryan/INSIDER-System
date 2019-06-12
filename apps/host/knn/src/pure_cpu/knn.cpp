@@ -49,7 +49,7 @@ struct DisPair {
 priority_queue<DisPair> max_heap[NUM_PREDICTING_CASES];
 
 void read_data(void) {
-  int fd = open("/mnt/knn_data.txt", O_RDWR);
+  int fd = open("/mnt/centos/knn_data.txt", O_RDWR);
 
   char buf[READ_BUF_SIZE];
   int state = 0;

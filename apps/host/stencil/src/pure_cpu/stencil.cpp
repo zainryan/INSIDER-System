@@ -37,7 +37,7 @@ private:
 };
 
 void read_data(void) {
-  int fd = open("/mnt/stencil_input.txt", O_RDONLY);
+  int fd = open("/mnt/centos/stencil_input.txt", O_RDONLY);
   char *read_buf = (char *)&input_pictures[0][0];
   unsigned long long total_read_bytes = 0;
 

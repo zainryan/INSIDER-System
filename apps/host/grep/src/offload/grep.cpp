@@ -42,7 +42,7 @@ char random_char() {
 }
 
 void generate_compared_str() {
-  const char *virt_path = reg_virt_file("/mnt/grep_input.txt");
+  const char *virt_path = reg_virt_file("/mnt/centos/grep_input.txt");
   fd = vopen(virt_path, O_RDONLY);
   char param_str[MAX_GREP_PARAM_SIZE];
   send_input_params(PARAM_STR_LEN);

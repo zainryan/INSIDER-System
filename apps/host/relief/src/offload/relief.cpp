@@ -45,7 +45,7 @@ int gen_data() {
 }
 void work(void) {
   gen_data();
-  const char *virt_path = reg_virt_file("/mnt/relief_data.txt");
+  const char *virt_path = reg_virt_file("/mnt/centos/relief_data.txt");
   int fd = vopen(virt_path, O_RDONLY);
 
   send_input_params(APP_THRES);

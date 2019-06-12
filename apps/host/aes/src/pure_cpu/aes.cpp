@@ -40,8 +40,7 @@ private:
 
 void read_encrypt(void) {
   int fd;
-  fd = open("../../data_gen/aes_data.txt", O_RDWR);
-  //fd = open("/mnt/aes_data.txt", O_RDWR);
+  fd = open("/mnt/centos/aes_data.txt", O_RDWR);
 
   AES_KEY key_matrix;
   for (int i = 0; i < 4 * (AES_MAXNR + 1); i++) 

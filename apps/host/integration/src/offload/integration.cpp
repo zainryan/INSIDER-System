@@ -52,7 +52,7 @@ inline void disp_result(int readBytes) {
 
 void work(void) {
   //    init();
-  const char *virt_path = reg_virt_file("/mnt/data_integration.txt");
+  const char *virt_path = reg_virt_file("/mnt/centos/data_integration.txt");
   int fd = vopen(virt_path, O_RDONLY);
   send_input_params(((APP_RECORD_THRES << 16) | (APP_QUERY_THRES)));
   send_input_params_array((unsigned int *)query,

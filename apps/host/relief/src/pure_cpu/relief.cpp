@@ -125,7 +125,7 @@ void filter(int *sample) {
 }
 
 inline void read_filte() {
-  int fd = open("/mnt/relief_data.txt", O_RDWR);
+  int fd = open("/mnt/centos/relief_data.txt", O_RDWR);
   char read_buf[READ_BUF_SIZE];
   int read_cnt = -1;
   while (read_cnt != TRAIN_SET_SIZE / READ_BUF_SIZE) {
@@ -150,7 +150,7 @@ inline void read_filte() {
 }
 
 void read_train(void) {
-  int fd = open("/mnt/relief_data.txt", O_RDWR);
+  int fd = open("/mnt/centos/relief_data.txt", O_RDWR);
   char read_buf[READ_BUF_SIZE];
   int read_cnt = -1;
   while (read_cnt != TRAIN_SET_SIZE / READ_BUF_SIZE) {

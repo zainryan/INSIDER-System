@@ -18,7 +18,7 @@ char *generate_input() {
 }
 
 int main() {
-  int fd = open("/data_new_apps/sw_input.txt", O_CREAT | O_WRONLY);
+  int fd = open("/mnt/centos/sw_input.txt", O_CREAT | O_WRONLY);
   std::cout << "Start to generate data in memory..." << std::endl;
   char *input_ptr = generate_input();
   unique_ptr<char> input_ptr_gc = unique_ptr<char>(input_ptr);

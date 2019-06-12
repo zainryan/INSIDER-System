@@ -19,7 +19,7 @@ using namespace std;
 int main() {
   ios::sync_with_stdio(false);
 
-  freopen("/data_new_apps/conv_kernel.txt", "w", stdout);
+  freopen("/mnt/centos/conv_kernel.txt", "w", stdout);
   // generate kernels
   for (int i = 0; i < NUM_OF_KERNELS; i++) {
     for (int j = 0; j < KERNEL_SIZE; j++) {
@@ -30,7 +30,7 @@ int main() {
   cout << flush;
 
   // generate images
-  freopen("/data_new_apps/conv_data.txt", "w", stdout);
+  freopen("/mnt/centos/conv_data.txt", "w", stdout);
   for (int n = 0; n < NUM_OF_TOTAL_ROWS; n++) {
     for (int i = 0; i < KERNEL_SIZE; i++) {
       unsigned char number = (unsigned char) rand();

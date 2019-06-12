@@ -57,7 +57,7 @@ void read_kernels() {
 #ifndef NDEBUG
   if ((fd = open("../../data_gen/conv_kernel.txt", O_RDWR)) < 0) {
 #else
-  if ((fd = open("/mnt/conv_kernel.txt", O_RDWR)) < 0) {
+  if ((fd = open("/mnt/centos/conv_kernel.txt", O_RDWR)) < 0) {
 #endif
     std::cout << "file open failed" << std::endl;
     exit(-1);
@@ -93,7 +93,7 @@ void read_compute() {
 #ifndef NDEBUG
   if ((fd = open("../../data_gen/conv_data.txt", O_RDWR)) < 0) {
 #else
-  if ((fd = open("/mnt/conv_data.txt", O_RDWR)) < 0) {
+  if ((fd = open("/mnt/centos/conv_data.txt", O_RDWR)) < 0) {
 #endif
     std::cout << "file open failed" << std::endl;
     exit(-1);

@@ -55,7 +55,7 @@ inline void calculation(int readBytes) {
 }
 
 void work(void) {
-  const char *virt_path = reg_virt_file("/mnt/statistical_data.txt");
+  const char *virt_path = reg_virt_file("/mnt/centos/statistical_data.txt");
   int fd = vopen(virt_path, O_RDONLY);
 
   send_input_params(COL_NUM);

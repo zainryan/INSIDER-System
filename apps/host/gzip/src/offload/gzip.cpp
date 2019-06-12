@@ -73,7 +73,7 @@ void generate_params() {
 }
 
 void prepare() {
-  const char *virt_path = reg_virt_file("/mnt/gzip_input.txt");
+  const char *virt_path = reg_virt_file("/mnt/centos/gzip_input.txt");
   fd = vopen(virt_path, O_RDONLY);
 }
 

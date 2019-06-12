@@ -25,7 +25,7 @@ string random_str(int len) {
 }
 
 int main() {
-  freopen("sql_data.txt", "w", stdout);
+  freopen("/mnt/centos/sql_data.txt", "w", stdout);
   ios::sync_with_stdio(false);
 
   for (int i = 0; i < ROUND_NUM; i++) {

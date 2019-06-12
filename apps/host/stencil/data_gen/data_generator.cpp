@@ -21,7 +21,7 @@ Point input_pictures[PADDING_HEIGHT + PICTURE_HEIGHT]
 mt19937 mt_rands[NUM_THREADS];
 
 int main() {
-  int fd = open("/data_new_apps/stencil_input.txt", O_CREAT | O_WRONLY);
+  int fd = open("/mnt/centos/stencil_input.txt", O_CREAT | O_WRONLY);
   for (int i = 0; i < NUM_THREADS; i++) {
     mt_rands[i] = mt19937(time(0));
   }

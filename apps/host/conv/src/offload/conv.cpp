@@ -66,7 +66,7 @@ void work(void) {
 
 void send_param() {
   int kfd;
-  if ((kfd = open("/mnt/conv_kernel.txt", O_RDONLY)) < 0) {
+  if ((kfd = open("/mnt/centos/conv_kernel.txt", O_RDONLY)) < 0) {
     std::cout << "ERROR: cannot open file" << std::endl;
     exit(-1);
   }
@@ -94,7 +94,7 @@ void send_param() {
 }
 
 void prepare() {
-  const char *virt_path = reg_virt_file("/mnt/conv_data.txt");
+  const char *virt_path = reg_virt_file("/mnt/centos/conv_data.txt");
   fd = vopen(virt_path, O_RDONLY);
 }
 

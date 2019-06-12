@@ -35,7 +35,7 @@ private:
 };
 
 void read_data(void) {
-  int fd = open("/mnt/grep_input.txt", O_RDONLY);
+  int fd = open("/mnt/centos/grep_input.txt", O_RDONLY);
   char *read_buf = (char *)&buf;
   int read_buf_cnt = 0;
 

@@ -42,7 +42,7 @@ void generate_params() {
 }
 
 void prepare() {
-  const char *virt_path = reg_virt_file("/mnt/sw_input.txt");
+  const char *virt_path = reg_virt_file("/mnt/centos/sw_input.txt");
   fd = vopen(virt_path, O_RDONLY);
 }
 

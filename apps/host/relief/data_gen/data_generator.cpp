@@ -16,7 +16,7 @@ int features[APP_HIT_DATA_NUM + APP_MISS_DATA_NUM][APP_FEATURE_DIM];
 int query[APP_QUERY_NUM][APP_FEATURE_DIM];
 
 int main() {
-  freopen("relief_data.txt", "w", stdout);
+  freopen("/mnt/centos/relief_data.txt", "w", stdout);
   ios::sync_with_stdio(false);
 
   for (long long i = 0; i < APP_HIT_DATA_NUM + APP_MISS_DATA_NUM; i++) {

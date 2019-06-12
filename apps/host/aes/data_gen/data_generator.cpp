@@ -9,7 +9,7 @@ using namespace std;
 
 int main() {
   ios::sync_with_stdio(false);
-  freopen("aes_data.txt", "w", stdout);
+  freopen("/mnt/centos/aes_data.txt", "w", stdout);
 
   for (unsigned long long i = 0; i < DATA_SIZE; i++) {
     unsigned char number = (unsigned char) rand();

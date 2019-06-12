@@ -49,7 +49,7 @@ struct DisPair {
 priority_queue<DisPair> max_heap;
 int fd;
 void gen_predicting_data(void) {
-  const char *virt_path = reg_virt_file("/mnt/knn_data.txt");
+  const char *virt_path = reg_virt_file("/mnt/centos/knn_data.txt");
   fd = vopen(virt_path, O_RDONLY);
   for (int i = 0; i < FEATURE_DIM; i++) {
     send_input_params(rand() % MAX_FEATURE_WEIGHT);

@@ -17,7 +17,7 @@ char random_char() {
 int main() {
   ios::sync_with_stdio(false);
 
-  freopen("data_integration.txt", "w", stdout);
+  freopen("/mnt/centos/data_integration.txt", "w", stdout);
 
   for (int i = 0; i < APP_RECORD_NUM; i++) {
     string row_data = "";

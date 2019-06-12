@@ -17,7 +17,7 @@ char random_char() {
 int main() {
   ios::sync_with_stdio(false);
 
-  freopen("grep_input.txt", "w", stdout);
+  freopen("/mnt/centos/grep_input.txt", "w", stdout);
 
   for (int i = 0; i < FILE_ROW_NUM; i++) {
     string line = "";

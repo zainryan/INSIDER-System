@@ -9,7 +9,7 @@ using namespace std;
 
 int main() {
   ios::sync_with_stdio(false);
-  freopen("statistical_data.txt", "w", stdout);
+  freopen("/mnt/centos/statistical_data.txt", "w", stdout);
 
   for (int i = 0; i < ROW_NUM; i++) {
     for (int j = 0; j < COL_NUM / sizeof(unsigned int); j++) {

@@ -34,7 +34,7 @@ void write_chunk(unsigned char *buf, unsigned long long size) {
 }
 
 int main() {
-  fd = open("/data_new_apps/equalizer_input.txt", O_CREAT | O_WRONLY);
+  fd = open("/mnt/centos/equalizer_input.txt", O_CREAT | O_WRONLY);
 
   for (int i = 0; i < NUM_THREADS; i++) {
     mt_rands[i] = mt19937(time(0));

@@ -58,7 +58,7 @@ void send_params() {
 }
 
 void work(void) {
-  const char *virt_path = reg_virt_file("/mnt/aes_data.txt");
+  const char *virt_path = reg_virt_file("/mnt/centos/aes_data.txt");
   int fd = vopen(virt_path, O_RDONLY);
 
   send_params();

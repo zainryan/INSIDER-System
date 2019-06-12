@@ -64,7 +64,7 @@ inline int prefix_filter(const char *query, const char *dataset,
 }
 
 void read_data(const char *query) {
-  int fp = open("/mnt/data_integration.txt", O_RDONLY);
+  int fp = open("/mnt/centos/data_integration.txt", O_RDONLY);
   if (fp < 0) {
     cout << "ERROR: cannot open file" << endl;
   }

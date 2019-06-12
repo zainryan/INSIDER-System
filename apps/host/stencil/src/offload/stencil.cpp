@@ -50,7 +50,7 @@ void generate_params() {
 }
 
 void prepare() {
-  const char *virt_path = reg_virt_file("/mnt/stencil_input.txt");
+  const char *virt_path = reg_virt_file("/mnt/centos/stencil_input.txt");
   fd = vopen(virt_path, O_RDONLY);
 }
 

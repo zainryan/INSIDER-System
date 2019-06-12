@@ -71,7 +71,7 @@ int get_round_name_mapping_id(string str) {
 long long totalReadBytes = 0;
 
 void read_data() {
-  const char *virt_path = reg_virt_file("/mnt/sql_data.txt");
+  const char *virt_path = reg_virt_file("/mnt/centos/sql_data.txt");
   int fd = vopen(virt_path, O_RDONLY);
   int year_upper_thresh = 30;
   int year_lower_thresh = 20;

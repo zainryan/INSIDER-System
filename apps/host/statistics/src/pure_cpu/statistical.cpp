@@ -38,7 +38,7 @@ private:
 unsigned int input_buf[ROW_NUM][NUMBER_PER_ROW];
 
 void read_data(void) {
-  int fd = open("/mnt/statistical_data.txt", O_RDWR);
+  int fd = open("/mnt/centos/statistical_data.txt", O_RDWR);
 
   unsigned int *input_buf_ptr = (unsigned int *)&input_buf;
   char read_buf[READ_BUF_SIZE];

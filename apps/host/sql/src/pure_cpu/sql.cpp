@@ -63,7 +63,7 @@ int get_round_name_mapping_id(string str) {
 }
 
 void read_data(void) {
-  int fd = open("/mnt/sql_data.txt", O_RDWR);
+  int fd = open("/mnt/centos/sql_data.txt", O_RDWR);
   char read_buf[READ_BUF_SIZE];
   int read_cnt = 0;
 
