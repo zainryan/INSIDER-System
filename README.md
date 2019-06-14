@@ -142,20 +142,14 @@ Github Repo
 ## Applications
 ```
 Applications
- |------- aes          # 128-bit AES ECB AES algorithm.
- |------- equalizer    # The image histogram equalizer.
  |------- grep         # String matching over the large text.
  |------- integration  # Combine data from multiple sources.
  |------- pt           # No-op, simply receives the drive input and returns it as the output.
  |------- rle          # The bitmap decompression (based on the run-length decoder).
  |------- statistics   # Per row statistical analyses.
- |------- sw           # The smith-waterman algorithm (a local sequence alignment algorithm).
- |------- conv         # The GEMM-based convolution algorithm.
- |------- gzip         # The GZIP compression algorithm.
  |------- knn          # K-nearest neighobors.
  |------- relief       # A feature selection algorithm --- relief algorithm.
  |------- sql          # A SQL query with select, where, sum, group by and order by.
- |------- stencil      # A 3x3 image stencil computation.
 ```
 
 ## Usage

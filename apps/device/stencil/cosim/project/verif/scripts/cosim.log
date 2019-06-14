@@ -1,8 +1,0 @@
-mkdir -p /home/centos/INSIDER/apps/device/stencil/cosim/project/verif/scripts/../../verif/sim
-mkdir -p /home/centos/INSIDER/apps/device/stencil/cosim/project/verif/scripts/../../verif/sim/test_main
-cd /home/centos/INSIDER/apps/device/stencil/cosim/project/verif/scripts/../../verif/sim/test_main && xsc /home/centos/INSIDER/apps/device/stencil/cosim/project/verif/scripts/../../software/verif_rtl/src/test_main.c --additional_option "-I/home/centos/INSIDER/apps/device/stencil/cosim/project/verif/scripts/../../software/verif_rtl/include -I/usr/include/insider" --additional_option "-DVIVADO_SIM"
-Multi-threading is on. Using 6 slave threads.
-Running compilation flow
-Waiting for 1 sub-compilation(s) to finish...
-ERROR: [XSIM 43-3410] Failed to compile one of the generated C files.
-Please recompile with "-mt off -v 1" switch to identify which design unit failed.
