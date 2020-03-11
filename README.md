@@ -122,7 +122,7 @@ Finally, please logout and relogin.
 
 ## Use Prebuilt AWS Image
 
-We provide a prebuilt AWS image whose AMI ID is __ami-0873e53fa97716fcd__. We have set its permission into public. You can follow the [official AWS guide](https://docs.aws.amazon.com/cli/latest/userguide/cli-services-ec2-instances.html) to launch your instance using our AMI ID. Please make sure that you set the correct security group which opens the neccesary port (e.g., the ssh port 22 and vnc ports 59XX).
+We provide a prebuilt AWS image whose AMI ID is __ami-0873e53fa97716fcd__. We have set its permission into public. Please launch instances from __us-east-1__ so you can access the AMI image. You can follow the [official AWS guide](https://docs.aws.amazon.com/cli/latest/userguide/cli-services-ec2-instances.html) to launch your instance using our AMI ID. Please make sure that you set the correct security group which opens the neccesary port (e.g., the ssh port 22 and vnc ports 59XX).
 
 Same as the [AWS EC2](#aws-ec2) section, here you need to use our AMI image to launch two instances: one compilation instance (C4) and one runtime instance (F1). After creating the instances, please clone this repo in the home directory (if there is a pre-existing one,  delete it first) and follow the instructions in [Run The Installation Script](#run-the-installation-script). Finally, make sure you import an valid Xilinx Vivado license (sorry but we could not include this in our repo due to legal issues).
 
