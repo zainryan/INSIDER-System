@@ -82,7 +82,7 @@ To reflect the performance in the latest system, we adapt the Insider drivers to
 [~]$ sudo yum swap kernel-headers -- kernel-ml-headers-4.14.0-1.el7.elrepo.x86_64.rpm
 [~]$ wget http://mirror.rc.usf.edu/compute_lock/elrepo/kernel/el7/x86_64/RPMS/kernel-ml-devel-4.14.0-1.el7.elrepo.x86_64.rpm
 [~]$ sudo yum localinstall --skip-broken kernel-ml-devel-4.14.0-1.el7.elrepo.x86_64.rpm
-[~]$ sudo grub2-mkconfig -o /boot/grub/grub.conf
+[~]$ sudo grub2-mkconfig -o /boot/grub2/grub.cfg
 [~]$ sudo grub2-set-default 0
 ```
 Finally reboot your system and verify that your kernel version is 4.14.0.
