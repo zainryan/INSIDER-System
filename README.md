@@ -7,7 +7,7 @@
 - [INSIDER](#insider)
   * [Papers](#papers)
   * [Restrictions](#restrictions)
-  * [Build from Source \[Not Recommended\]](#build-from-source-not-recommended)
+  * [Build from Source](#build-from-source)
     + [AWS EC2](#aws-ec2)
     + [AWS FPGA Toolchain](#aws-fpga-toolchain)
     + [Linux Kernel](#linux-kernel)
