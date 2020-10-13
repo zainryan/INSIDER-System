@@ -38,7 +38,7 @@ Zhenyuan Ruan, Tong He and Jason Cong<br>
 
 2. This version does not support simultaneous multiple applications. We have [a separate github repository](https://github.com/zainryan/Insider-multiapp) for that.
 
-## Build from Source \[Not Recommended\]
+## Build from Source
 Alternative, you could use our prebuilt aws image (see [Use Prebuilt AWS Image](#use-prebuilt-aws-image)); this will help you save time to build source from scratch. 
 
 ### AWS EC2
@@ -76,11 +76,11 @@ After that please logout your ssh terminal and re-login. The initialization woul
 
 To reflect the performance in the latest system, we adapt the Insider drivers to kernel 4.14. However, the default Linux version of AWS FPGA AMI is 3.10.0. You should update the kernel version manually.
 ```
-[~]$ wget http://mirror.rc.usf.edu/compute_lock/elrepo/kernel/el7/x86_64/RPMS/kernel-ml-4.14.0-1.el7.elrepo.x86_64.rpm
+[~]$ wget http://mirrors.coreix.net/elrepo-archive-archive/kernel/el7/x86_64/RPMS/kernel-ml-4.14.0-1.el7.elrepo.x86_64.rpm
 [~]$ sudo yum localinstall kernel-ml-4.14.0-1.el7.elrepo.x86_64.rpm
-[~]$ wget http://mirror.rc.usf.edu/compute_lock/elrepo/kernel/el7/x86_64/RPMS/kernel-ml-headers-4.14.0-1.el7.elrepo.x86_64.rpm
+[~]$ wget http://mirrors.coreix.net/elrepo-archive-archive/kernel/el7/x86_64/RPMS/kernel-ml-headers-4.14.0-1.el7.elrepo.x86_64.rpm
 [~]$ sudo yum swap kernel-headers -- kernel-ml-headers-4.14.0-1.el7.elrepo.x86_64.rpm
-[~]$ wget http://mirror.rc.usf.edu/compute_lock/elrepo/kernel/el7/x86_64/RPMS/kernel-ml-devel-4.14.0-1.el7.elrepo.x86_64.rpm
+[~]$ wget http://mirrors.coreix.net/elrepo-archive-archive/kernel/el7/x86_64/RPMS/kernel-ml-devel-4.14.0-1.el7.elrepo.x86_64.rpm
 [~]$ sudo yum localinstall --skip-broken kernel-ml-devel-4.14.0-1.el7.elrepo.x86_64.rpm
 [~]$ sudo grub2-mkconfig -o /boot/grub2/grub.cfg
 [~]$ sudo grub2-set-default 0
@@ -102,7 +102,7 @@ $ sudo yum install boost-devel
 Some functionality of Insider compiler is implemented based on LLVM and Clang, which should be built first.
 ```
 $ sudo yum install cmake3 svn
-$ cd $PATH_TO_LLVM
+$ PATH_TO_LLVM=~/llvm-path; mkdir -p $PATH_TO_LLVM; cd $PATH_TO_LLVM
 $ svn checkout http://llvm.org/svn/llvm-project/llvm/trunk@346828 llvm
 $ cd llvm/tools; svn co http://llvm.org/svn/llvm-project/cfe/trunk@346828 clang
 $ cd $PATH_TO_LLVM; mkdir build; cd build; cmake3 $PATH_TO_LLVM/llvm
@@ -113,9 +113,9 @@ $ make -j8 # Replace 8 with the number of cores of your instance, using too many
 
 The build and installation of Insider is easy. First, you need to set the environment variable `LLVM_SRC_PATH` to the path of the llvm source, and set `LLVM_BUILD_PATH` to the path of the llvm build folder. After that, clone this repository and execute the `install.sh` script.
 ```
-$ export LLVM_SRC_PATH=PATH TO THE LLVM SOURCE
-$ export LLVM_BUILD_PATH=PATH TO THE LLVM BUILD FOLDER
-$ export AWS_FPGA_PATH=PATH TO THE CLONED AWS FPGA GITHUB REPOSITORY
+$ export LLVM_SRC_PATH=$PATH_TO_LLVM/llvm
+$ export LLVM_BUILD_PATH=$PATH_TO_LLVM/build
+$ export AWS_FPGA_PATH=$AWS_FPGA_DIR
 $ ./install.sh
 ```
 Finally, please logout and relogin. 
@@ -124,7 +124,16 @@ Finally, please logout and relogin.
 
 We provide a prebuilt AWS image whose AMI ID is __ami-0873e53fa97716fcd__. We have set its permission into public. Please launch instances from __us-east-1__ so you can access the AMI image. You can follow the [official AWS guide](https://docs.aws.amazon.com/cli/latest/userguide/cli-services-ec2-instances.html) to launch your instance using our AMI ID. Please make sure that you set the correct security group which opens the neccesary port (e.g., the ssh port 22 and vnc ports 59XX).
 
-Same as the [AWS EC2](#aws-ec2) section, here you need to use our AMI image to launch two instances: one compilation instance (C4) and one runtime instance (F1). After creating the instances, please clone this repo in the home directory (if there is a pre-existing one,  delete it first) and follow the instructions in [Run The Installation Script](#run-the-installation-script). Finally, make sure you import an valid Xilinx Vivado license (sorry but we could not include this in our repo due to legal issues).
+Same as the [AWS EC2](#aws-ec2) section, here you need to use our AMI image to launch two instances: one compilation instance (C4) and one runtime instance (F1). After creating the instances, please clone this repo in the home directory (if there is a pre-existing one, delete it first) and follow the instructions in [Run The Installation Script](#run-the-installation-script).
+
+Then, please execute the following commands in the instance and reboot before you proceed.
+
+```
+[~]$ sudo grub2-mkconfig -o /boot/grub2/grub.cfg
+[~]$ sudo grub2-set-default 0
+```
+
+Finally, make sure you import a valid Xilinx Vivado 2017.4 license to use this prebuilt image (sorry, but we could not include this due to legal issues). We are not longer able to publish an AMI image with the marketplace license from FPGA Developer AMI. If you would like to try out the INSIDER system using the free license in FPGA Developer AMI, please send your AWS account number to <ucla-vast-insider@dotkr.nl> using your institutional email, and we will add you to the access list of the derived AMI image.
 
 ## Folder Organizations
 ```
@@ -210,7 +219,7 @@ $ staccel_syn
 ```
 Then, You can simply follow the [standard process in AWS F1](https://github.com/aws/aws-fpga/tree/master/hdk#step2) to continue. Simply invoke the script to trigger the Vivado suite to synthesize the project.
 ```
-$ cd project/build/scripts; ./aws_build_dcp_from_cl.sh
+$ (cd project/build/scripts; ./aws_build_dcp_from_cl.sh);
 ```
 You can track the progress via tailing the log file. The synthesis usually takes about three hours. 
 ```
