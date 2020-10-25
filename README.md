@@ -47,7 +47,7 @@ You typically needs two EC2 instances:
 
   1. Used for code compilation and FPGA binary generation. This could be any type of EC2 instance as long as it has enough VCPU and RAM to run Xilinx Vivado for FPGA synthesis. For example, you can choose c4.4xlarge.
 
-  2. Used for running the Insider system. This must be an f1.2xlarge (since some parameters in our repo is hard coded). If you want to try Insider in other types of FPGA instance, please send us an email.
+  2. Used for running the Insider system. This must be an f1.2xlarge (since some parameters in our repo is hard coded). If you want to try Insider in other types of FPGA instances, please send us an email.
 
 For both instances, you should use the FPGA developer AMI, which can be found at the AWS Marketplace when you launching a new instance. There are two caveats.
 
