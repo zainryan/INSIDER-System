@@ -53,6 +53,9 @@ if ls /dev | grep fpga_dma$ > /dev/null; then
 	|| { echo 'rm /dev/fpga_dma failed!'; exit 1;}
 fi
 
+sudo setpci -v -s 0000:00:1d.0 COMMAND=06 \
+    || { echo 'Enable FPGA PCIe bus master failed!'; exit 1;}
+
 sudo fpga-load-local-image -S 0 -I $AGFI_ID \
     || { echo 'load fpga image failed!'; exit 1;}
 
