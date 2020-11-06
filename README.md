@@ -122,18 +122,11 @@ Finally, please logout and relogin.
 
 ## Use Prebuilt AWS Image
 
-We provide a prebuilt AWS image whose AMI ID is __ami-0873e53fa97716fcd__. We have set its permission into public. Please launch instances from __us-east-1__ so you can access the AMI image. You can follow the [official AWS guide](https://docs.aws.amazon.com/cli/latest/userguide/cli-services-ec2-instances.html) to launch your instance using our AMI ID. Please make sure that you set the correct security group which opens the neccesary port (e.g., the ssh port 22 and vnc ports 59XX).
+We provide a prebuilt AWS image whose AMI ID is __ami-04c8ef1dee652fe24__. We have set its permission into public. Please launch instances from __us-east-1__ so you can access the AMI image. You can follow the [official AWS guide](https://docs.aws.amazon.com/cli/latest/userguide/cli-services-ec2-instances.html) to launch your instance using our AMI ID. Please make sure that you set the correct security group which opens the neccesary port (e.g., the ssh port 22 and vnc ports 59XX).
 
 Same as the [AWS EC2](#aws-ec2) section, here you need to use our AMI image to launch two instances: one compilation instance (C4) and one runtime instance (F1). After creating the instances, please clone this repo in the home directory (if there is a pre-existing one, delete it first) and follow the instructions in [Run The Installation Script](#run-the-installation-script).
 
-Then, please execute the following commands in the instance and reboot before you proceed.
-
-```
-[~]$ sudo grub2-mkconfig -o /boot/grub2/grub.cfg
-[~]$ sudo grub2-set-default 0
-```
-
-Finally, make sure you import a valid Xilinx Vivado 2017.4 license to use this prebuilt image (sorry, but we could not include this due to legal issues). We are not longer able to publish an AMI image with the marketplace license from FPGA Developer AMI. If you would like to try out the INSIDER system using the free license in FPGA Developer AMI, please send your AWS account number to <ucla-vast-insider@dotkr.nl> using your institutional email, and we will add you to the access list of the derived AMI image.
+Please make sure you import a valid Xilinx Vivado 2017.4 license to use this prebuilt image (sorry, but we could not include this due to legal issues). We are not longer able to publish an AMI image with the marketplace license from FPGA Developer AMI. If you would like to try out the INSIDER system using the free license in FPGA Developer AMI, please send your AWS account number to <ucla-vast-insider@dotkr.nl> using your institutional email, and we will add you to the access list of the derived AMI image.
 
 ## Folder Organizations
 ```
@@ -276,7 +269,6 @@ Before executing the host program, we first need to prepare the input data (whic
 $ cd apps/host/grep/data_gen
 $ ./compile.sh
 $ ./data_gen # This step takes some time since we generate near 60GiB-size input.
-$ cp grep_input.txt /mnt
 ```
 Now you can run the host program. You can run the offloading version and the pure-cpu version separately to see the performance difference.
 
